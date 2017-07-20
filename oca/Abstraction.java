@@ -70,12 +70,10 @@ abstract class Animal implements Nommable{
 }
 
 class MangeurDeViande extends Animal{
-
     @Override
     public String getNom() {
         return "Viandard";
-    }
-    
+    }   
 } 
 
 abstract class Carnivore extends MangeurDeViande{
