@@ -36,7 +36,8 @@ public class Soleil {
         System.out.println(wx.getInsw());//10
         Soleil[] ts = {new Soleil(), new Soleil()};
         ts=null;
-        System.out.println( Soleil.x==null);
+        System.out.println( Soleil.x==null);//false
+        Soleil.x=null;
         
     }
 }
