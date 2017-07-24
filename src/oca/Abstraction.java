@@ -116,7 +116,7 @@ class Plante implements Dangereux{
 class Lion extends Carnivore implements Dangereux{   
     @Override
     public int getNiveauDanger() {
-        return 6;
+        return 4;
     }
 
     @Override
