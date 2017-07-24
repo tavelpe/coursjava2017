@@ -1,9 +1,120 @@
 
 package oca;
+import java.util.Arrays;
+
+class Ours implements Comparable<Ours>{
+    int age, poids;
+    String nom;
+    public Ours(int age, int poids, String nom) {
+        this.age = age;
+        this.poids = poids;
+        this.nom = nom;
+    }
+
+    @Override
+    public String toString() {
+        return "Ours{" + "nom=" + nom +", age=" + age + ", poids=" + poids +  '}';
+    }
+
+    @Override
+    public int compareTo(Ours o) {
+      // return  this.age - o.age;
+      // return this.age>o.age?1: (this.age==o.age?0:-1);
+       return Integer.compare(this.age, o.age);
+      
+    }
+    
+    
+    
+    
+    
+    
+}
+
 
 public class Tableaux {
-    public static void main(String[] args) {
+    public static void main(String... args) {
         
+        System.out.println( somme(1,2,new int[]{5,6,8,4}) );
+        System.out.println( somme( 5, 6, 8, 4 ) );
+        System.out.println( somme(10, 30) );
+        System.out.println(String.format("%s %s %s %s", 2,5,6,10));
+        
+        int[] ti = new int[]{5,6,8,4};
+        Arrays.sort(ti);
+        System.out.println(Arrays.toString(ti));
+        int[] ti2 = new int[]{4,5,6,8};
+        Integer[] tto =  Arrays.stream( ti ).boxed().toArray( Integer[]::new );
+        Integer[] tto2 = Arrays.stream( ti2 ).mapToObj(i -> i).toArray(Integer[]::new);
+
+        System.out.println(Arrays.deepEquals(tto, tto2));//equals 
+        System.out.println(Arrays.equals(ti, ti2));//==
+        
+        System.out.println(Arrays.binarySearch(ti,5)); 
+        System.out.println(Arrays.binarySearch(ti,7)); //-index -1
+        
+        //Arrays.fill(tto, 5);
+        Arrays.fill(tto, 1, 3, 10);
+        System.out.println(Arrays.toString(tto));
+        int[] copy = new int[10];
+        copy=Arrays.copyOf(ti,2);
+        System.out.println(Arrays.toString(copy));
+        copy=Arrays.copyOfRange(ti, 1, 3);
+        System.out.println(Arrays.toString(copy));
+        copy=Arrays.copyOfRange(ti, 1, 8);
+        System.out.println(Arrays.toString(copy));
+        System.arraycopy(ti, 1, copy, 4, 2);
+        System.out.println(Arrays.toString(copy));
+        
+        Ours papa = new Ours(10, 150, "papa");
+        
+        Ours[] caverne = {
+            new Ours(10, 150, "papa"),
+            new Ours(12, 120, "maman"),
+            new Ours(8, 160, "fils"),
+            new Ours(3, 80, "fille")
+        };
+        
+        
+        Arrays.sort(caverne);
+        System.out.println(Arrays.toString(caverne)); 
+        
+        
+        
+        
+        
+        
+        
+    }
+
+    static int somme(int h, int k, int... ti){//varargs
+        int somme =h+k;
+        for (int i : ti) {
+            somme+=i;
+        }
+        return somme;
+    }
+     static int somme(int h, int k){
+        int somme =h+k;
+        return somme;
+    }
+//     static int somme(int h, int k, int[] ti){//illegal
+//        int somme =h+k;
+//        for (int i : ti) {
+//            somme+=i;
+//        }
+//        return somme;
+//    }
+     
+//    static int somme(int h, int... ti){//varargs ambigüe
+//        int somme =h;
+//        for (int i : ti) {
+//            somme+=i;
+//        }
+//        return somme;
+//    }
+    
+    private static void general() {
         int[] ti;
         int tj[];
         int [] tk = { 5,6,7};
@@ -20,7 +131,7 @@ public class Tableaux {
         int[] tz =ttk[0];
         tz[2]=10;
         System.out.println(ttk[0][2]==10);
-       // tz = null;
+        // tz = null;
         System.out.println(ttk[0][2]);
         
         ttj = ttk;
@@ -80,7 +191,7 @@ public class Tableaux {
                 {6,7,8,9,10}, null
             },
             new int[3][4]
-            ,
+                ,
             {
                 null
             }
@@ -113,6 +224,5 @@ public class Tableaux {
         int[][] jeu13 = {{new Integer(2),new Integer(3)},{ new Integer(4), integ} };
         int[][] jeu14 = {   };
         int[][] jeu15 = new int[0][];
-
     }
 }
