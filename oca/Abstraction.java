@@ -55,7 +55,12 @@ public class Abstraction {
                 System.out.println(" pas un animal");
             }
         }
-        
+        Nommable n = new Nommable() {
+            @Override
+            public String getNom() {
+                return "anonyme";
+            }
+        };
     }
     
     

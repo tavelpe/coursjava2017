@@ -1,6 +1,7 @@
 
 package oca;
 import java.util.Arrays;
+import java.util.Comparator;
 
 class Ours implements Comparable<Ours>{
     int age, poids;
@@ -13,21 +14,34 @@ class Ours implements Comparable<Ours>{
 
     @Override
     public String toString() {
-        return "Ours{" + "nom=" + nom +", age=" + age + ", poids=" + poids +  '}';
+        return "Ours{" + "nom=" + nom +", age=" + age + ", poids=" + poids +  '}'+'\n';
     }
 
     @Override
     public int compareTo(Ours o) {
       // return  this.age - o.age;
       // return this.age>o.age?1: (this.age==o.age?0:-1);
-       return Integer.compare(this.age, o.age);
-      
+      int r=Integer.compare(this.age, o.age);
+      if(r==0)
+           r = Integer.compare(this.poids, o.poids);
+       return r;    
+    }    
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Ours)
+            return  this.compareTo((Ours)obj)==0;
+        return false;
     }
-    
-    
-    
-    
-    
+
+}
+
+class NomOursComparator implements Comparator<Ours>{
+
+    @Override
+    public int compare(Ours o1, Ours o2) {
+        return o1.nom.compareToIgnoreCase(o2.nom);
+    }
     
 }
 
@@ -66,24 +80,35 @@ public class Tableaux {
         System.arraycopy(ti, 1, copy, 4, 2);
         System.out.println(Arrays.toString(copy));
         
-        Ours papa = new Ours(10, 150, "papa");
+        Ours papa = new Ours(10, 160, "papa");
         
         Ours[] caverne = {
-            new Ours(10, 150, "papa"),
+            new Ours(10, 160, "papa"),
             new Ours(12, 120, "maman"),
             new Ours(8, 160, "fils"),
+            new Ours(10, 155, "oncle"),
+            new Ours(11, 120, "tante"),
+            new Ours(7, 160, "neveu"),
             new Ours(3, 80, "fille")
         };
-        
-        
         Arrays.sort(caverne);
         System.out.println(Arrays.toString(caverne)); 
-        
-        
-        
-        
-        
-        
+        System.out.println(Arrays.binarySearch(caverne, papa)); 
+        System.out.println(caverne[4]==papa);
+        System.out.println(caverne[4].equals(papa));
+        System.out.println("-----------------------------------------");
+        Arrays.sort(caverne, new NomOursComparator());
+        System.out.println(Arrays.toString(caverne));  
+        int r=1;
+        Comparator<Ours> co =new 
+                Comparator<Ours>() {
+                    @Override
+                    public int compare(Ours o1, Ours o2) {
+                        return Integer.compare(o2.poids, o1.poids)*r;
+                     }
+                };
+        Arrays.sort(caverne, co  );
+        System.out.println(Arrays.toString(caverne)); 
         
     }
 
