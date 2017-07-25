@@ -87,12 +87,14 @@ final class T{
         this(20);
     }
     final static int SCI;
+    
     static {
         SCI = 36;
     }
     final static int SDI=36+(int)Math.PI;
     
    
+    byte b = SDI;
     
     
 }
