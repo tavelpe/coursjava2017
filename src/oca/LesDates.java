@@ -5,7 +5,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalQuery;
 import java.util.Calendar;
@@ -91,6 +93,9 @@ public class LesDates {
         System.out.println(LocalDate.now().with(TemporalAdjusters.nextOrSame(DayOfWeek.TUESDAY)));
         System.out.println(LocalDate.now().with(TemporalAdjusters.ofDateAdjuster(d -> d.plusDays(5))));
 
+        System.out.println("Next Friday 13th="+LocalDate.now().with(new NextFriday13thAdjuster()));
+        
+        
         System.out.println(LocalDate.now().minusDays(1).query(new FerieQuery()));;
         
         System.out.println(LocalDate.now().query(new TemporalQuery<LocalDate>() {
@@ -118,15 +123,19 @@ public class LesDates {
         ZonedDateTime arriveeHdeGE = arriveeLA.withZoneSameInstant(geneve);;
         System.out.println(arriveeHdeGE);
         
-        DateTimeFormatter formatterA = DateTimeFormatter.ofPattern("dd MMM yyy hh:mm a");
+        DateTimeFormatter formatterA = DateTimeFormatter.ofPattern("dd MMM yyy hh:mm");
         System.out.println(formatterA.format(depart)); 
         DateTimeFormatter formatterP=DateTimeFormatter.ofPattern("dd/MM/yyy");
         System.out.println(formatterP.parse("12/05/2017"));
         LocalDate ld= LocalDate.parse("12/05/2017", formatterP);
-
         System.out.println(ld);
         
-        
+        formatterA =DateTimeFormatter.ofPattern("EEEE dd MMMM yyy HH:mm", Locale.GERMAN);
+        System.out.println(formatterA.format(depart));
+        Locale l = new Locale("ES", "GT");
+        formatterA =DateTimeFormatter.ofPattern("EEEE dd MMMM yyy HH:mm", l);
+        System.out.println(formatterA.format(depart));      
+        System.out.println(l.getDisplayLanguage()+" "+l.getDisplayCountry());
 
     }
 
@@ -165,4 +174,14 @@ class FerieQuery implements TemporalQuery<Boolean> {
         return dow == DayOfWeek.MONDAY || dow == DayOfWeek.SUNDAY;
     }
 
+}
+class NextFriday13thAdjuster implements TemporalAdjuster {
+        @Override
+	public Temporal adjustInto(Temporal temporalInput) {
+		LocalDate date = LocalDate.from(temporalInput);
+		while (date.getDayOfWeek() != DayOfWeek.FRIDAY) {
+                    date = date.plusMonths(1).withDayOfMonth(13);
+                }
+		return temporalInput.with(date);
+	}
 }
