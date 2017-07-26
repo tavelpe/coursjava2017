@@ -9,8 +9,7 @@ public class LesExceptions {
     }
 
     
-    static int calcul(int i, int j) {
-        
+    static int calcul(int i, int j) {   
         return i/j;
     }
     

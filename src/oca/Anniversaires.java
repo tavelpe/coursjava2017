@@ -44,7 +44,8 @@ class JourAnniversaire {
 public class Anniversaires {
 
     public static void main(String[] args) {
-        String d = "26/07/2000";
+        long start = System.nanoTime();
+        String d = "25/12/0001";
         String modele = "dd/MM/yyyy";
         DateTimeFormatter formater = DateTimeFormatter.ofPattern(modele);
         LocalDate anniv = LocalDate.parse(d, formater);
@@ -62,7 +63,7 @@ public class Anniversaires {
             DayOfWeek dow = DayOfWeek.values()[jour.getJour() - 1];
             System.out.println(dow.getDisplayName(TextStyle.FULL, Locale.FRENCH) + " - " + jour.getNombre() + " fois - " + Arrays.toString(jour.getAnnees()) + " ");
         }
-
+        System.out.println((System.nanoTime()-start)/1000000); ;
     }
 
 }
