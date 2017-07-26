@@ -59,6 +59,7 @@ public class Anniversaires {
             datesAnniversaire[annee] = anniv.plusYears(annee);
             JourAnniversaire.IncrementeDates(datesAnniversaire[annee]);
         }
+        System.out.println((System.nanoTime()-start)/1000000); 
         for (JourAnniversaire jour : JourAnniversaire.DATES) {
             DayOfWeek dow = DayOfWeek.values()[jour.getJour() - 1];
             System.out.println(dow.getDisplayName(TextStyle.FULL, Locale.FRENCH) + " - " + jour.getNombre() + " fois - " + Arrays.toString(jour.getAnnees()) + " ");
